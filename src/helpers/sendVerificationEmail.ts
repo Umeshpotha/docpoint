@@ -46,42 +46,90 @@ export async function sendVerificationEmail(
 
     // Send the email
     const info =  transporter.sendMail({
-      from: '"docpointofficial" <umeshpotha123@gmail.com>', 
+      from: '"doctorspointofficial" <umeshpotha123@gmail.com>', 
       to: email, 
       subject: "Verification Code",
-      html:`<html lang="en" dir="ltr">
-        <head>
-          <title>Verification Code</title>
-          <Font
-            fontFamily="Roboto"
-            fallbackFontFamily="Verdana"
-            webFont={{
-              url: 'https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2',
-              format: 'woff2',
-            }}
-            fontWeight={400}
-            fontStyle="normal"
-          />
-        </head>
-        <preview>Here&apos;s your verification code: ${verifyCode} </preview>
-        <section>
-          <row>
-            <Heading as="h2">Hello ${username},</Heading>
-          </row>
-          <row>
-            <text>
-              Thank you for registering. Please use the following verification
-              code to complete your registration:
-            </text>
-          </row>
-          
-          <row>
-            <text>
-              If you did not request this code, please ignore this email.
-            </text>
-          </row>
-        </section>
-      </html>`, 
+      html:`
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            font-size: 24px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .content {
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        .code-box {
+            font-size: 32px;
+            font-weight: bold;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #888888;
+            font-size: 14px;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            Doctors Point -Email Verification
+        </div>
+
+        <div class="content">
+            <p>Hello,${username}</p>
+            <p>Your verification code is:</p>
+            
+            <div class="code-box">${verifyCode}</div>
+
+            <p>Please enter this code to verify your email address.</p>
+        </div>
+
+        <div class="footer">
+            <p>Thank you!<br>The Doctors Point Team</p>
+        </div>
+    </div>
+</body>
+</html>`, 
     });
 
     console.log("Email sent: %s", (await info).messageId);
