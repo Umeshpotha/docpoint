@@ -19,7 +19,7 @@ function Navbar() {
           {session ? (
             <>
               <span className="mr-4 text-gray-300">
-                Welcome, {user?.name || user?.email}
+                Welcome, {user?.username||user?.email}
               </span>
               <Button 
                 onClick={() => signOut()} 

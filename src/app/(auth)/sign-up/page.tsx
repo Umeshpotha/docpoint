@@ -21,7 +21,11 @@ const page = () => {
   const [usernameMessage, setUsernameMessage] = useState('');
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState('');
+  const [passwordMessages, setPasswordMessages] = useState('');
+  const [meetsRequirements, setMeetsRequirements] = useState(false);
   const debounced = useDebounceCallback(setUsername, 300);
+  const debouncedPassword = useDebounceCallback((value) => checkPasswordStrength(value), 300);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -48,6 +52,36 @@ const page = () => {
     };
     checkUsernameUnique();
   }, [username]);
+  const checkPasswordStrength = (password: string) => {
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSymbol = /[!@#$%^&*]/.test(password);
+  
+    // Determine strength
+    const strength = [hasUppercase, hasLowercase, hasNumber, hasSymbol].filter(Boolean).length;
+  
+    if (strength <= 2) setPasswordStrength('Weak');
+    else if (strength === 3) setPasswordStrength('Moderate');
+    else setPasswordStrength('Strong');
+  
+    // Check if all requirements are met
+    if (hasUppercase && hasLowercase && hasNumber && hasSymbol) {
+      setMeetsRequirements(true);
+      setPasswordMessages(''); // No message if all conditions are met
+    } else {
+      setMeetsRequirements(false);
+  
+      // List missing criteria
+      const messages = [];
+      if (!hasUppercase) messages.push('Uppercase letter');
+      if (!hasLowercase) messages.push('Lowercase letter');
+      if (!hasNumber) messages.push('Number');
+      if (!hasSymbol) messages.push('Special character');
+  
+      setPasswordMessages(`Password is missing: ${messages.join(', ')}`);
+    }
+  };
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
@@ -98,7 +132,7 @@ const page = () => {
                     />
                   </FormControl>
                   {isCheckingUsername && <Loader2 className="animate-spin" />}
-                  <p className={`text-sm ${usernameMessage === "Username is unique" ? 'text-green-500' : 'text-red-500'}`}>
+                  <p className={`text-sm ${usernameMessage === "Username Available" ? 'text-green-500' : 'text-red-500'}`}>
                     {usernameMessage}
                   </p>
                   <FormMessage />
@@ -133,14 +167,24 @@ const page = () => {
                       type="password"
                       placeholder="Password"
                       {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        debouncedPassword(e.target.value);
+                      }}
                       className="bg-gray-700 text-white placeholder-gray-400 shadow-md"
                     />
                   </FormControl>
+                  <p className={`text-sm ${passwordStrength === 'Weak' ? 'text-red-500' : passwordStrength === 'Moderate' ? 'text-yellow-500' : 'text-green-500'}`}>
+                    {passwordStrength ? `Password Strength: ${passwordStrength}` : ''}
+                  </p>
+                  <p className="text-sm text-yellow-500">
+        {passwordMessages} {/* This shows what is missing from the password */}
+      </p>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmitting} className="w-full bg-teal-400 hover:bg-teal-300 shadow-lg">
+            <Button type="submit" disabled={isSubmitting||!meetsRequirements} className="w-full bg-teal-400 hover:bg-teal-300 shadow-lg">
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
