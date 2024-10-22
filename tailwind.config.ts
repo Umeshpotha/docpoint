@@ -12,6 +12,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes:{
+        'bounce-sideways': {
+          '0%, 100%': {
+            transform: 'translateX(-25%)',
+            'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translateX(0)',
+            'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -60,6 +72,9 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
     },
+    animation:{
+      'bounce-sideways': 'bounce-sideways 1s infinite',
+    }
   },
   plugins: [
     require("tailwindcss-animate"),

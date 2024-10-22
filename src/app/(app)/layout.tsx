@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 
 interface RootLayoutProps {
@@ -10,6 +11,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       {/* Make the Navbar sticky */}
       <Navbar />
       <main className="flex-grow">{children}</main>
+      <Footer/>
     </div>
   );
 }

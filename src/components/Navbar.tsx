@@ -1,13 +1,19 @@
-"use client";
-import React from 'react';
+// Navbar.tsx
+"use client"
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { Button } from './ui/button';
 import { User } from 'next-auth';
+import { Bell, UserCircle } from 'lucide-react';
+import NotificationModal from './NotificationModel';
+
+NotificationModal
 
 function Navbar() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
+  const [showNotifications, setShowNotifications] = useState(false); // State to control notifications visibility
 
   return (
     <nav className="sticky top-0 z-50 p-4 md:p-6 shadow-md bg-gray-900 text-white">
@@ -19,8 +25,24 @@ function Navbar() {
           {session ? (
             <>
               <span className="mr-4 text-gray-300">
-                Welcome, {user?.username||user?.email}
+                Welcome, {user?.username || user?.email}
               </span>
+              <button 
+                className="mr-4 p-2 rounded-full hover:bg-gray-700 focus:outline-none" 
+                aria-label="Profile"
+              >
+                <UserCircle className="h-8 w-8 text-gray-300" />
+              </button>
+              <div className="relative mr-4">
+                <button 
+                  onClick={() => setShowNotifications(true)} // Open notifications
+                  className="p-2 rounded-full hover:bg-gray-700 focus:outline-none" 
+                  aria-label="Notifications"
+                >
+                  <Bell className="h-6 w-6 text-gray-300" />
+                </button>
+              </div>
+              
               <Button 
                 onClick={() => signOut()} 
                 className="bg-teal-400 text-black hover:bg-teal-300 shadow-lg" 
@@ -41,6 +63,9 @@ function Navbar() {
           )}
         </div>
       </div>
+
+      {/* NotificationModal Component */}
+      <NotificationModal showNotifications={showNotifications} setShowNotifications={setShowNotifications} />
     </nav>
   );
 }
