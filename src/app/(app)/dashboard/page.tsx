@@ -1,107 +1,125 @@
+"use client";
+import { SkeletonCard } from '@/components/SkeletonCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import React from 'react';
-
-const hospitals = [
-  {
-    id: 1,
-    title: 'Sunshine City Hospital',
-    description: 'Type: General Hospital',
-    location: '123 Medical St., Healthcare City',
-    image: 'https://media.gettyimages.com/id/1312706413/photo/modern-hospital-building.jpg?s=612x612&w=gi&k=20&c=1-EC4Mxf--5u4ItDIzrIOrduXlbKRnbx9xWWtiifrDo=',
-    tags: ['General', 'Emergency', 'Pediatrics'],
-  },
-  {
-    id: 2,
-    title: 'Green Valley Medical Center',
-    description: 'Type: Specialty Hospital',
-    location: '789 Wellness Ave., Green District',
-    image: 'https://media.gettyimages.com/id/1312706413/photo/modern-hospital-building.jpg?s=612x612&w=gi&k=20&c=1-EC4Mxf--5u4ItDIzrIOrduXlbKRnbx9xWWtiifrDo=',
-    tags: ['Cardiology', 'Neurology', 'Oncology'],
-  },
-  {
-    id: 3,
-    title: 'Oceanview Health Center',
-    description: 'Type: General Hospital',
-    location: '456 Seaside Blvd., Ocean City',
-    image: 'https://media.gettyimages.com/id/1312706413/photo/modern-hospital-building.jpg?s=612x612&w=gi&k=20&c=1-EC4Mxf--5u4ItDIzrIOrduXlbKRnbx9xWWtiifrDo=',
-    tags: ['Dermatology', 'Orthopedics', 'Emergency'],
-  },
-  {
-    id: 4,
-    title: 'Mountain Peak Hospital',
-    description: 'Type: General Hospital',
-    location: '321 Summit Rd., Mountain Town',
-    image: 'https://media.gettyimages.com/id/1312706413/photo/modern-hospital-building.jpg?s=612x612&w=gi&k=20&c=1-EC4Mxf--5u4ItDIzrIOrduXlbKRnbx9xWWtiifrDo=',
-    tags: ['General', 'Surgery'],
-  },
-  {
-    id: 5,
-    title: 'Riverbend Medical Institute',
-    description: 'Type: Specialty Hospital',
-    location: '654 River Rd., Riverside',
-    image: 'https://media.gettyimages.com/id/1312706413/photo/modern-hospital-building.jpg?s=612x612&w=gi&k=20&c=1-EC4Mxf--5u4ItDIzrIOrduXlbKRnbx9xWWtiifrDo=',
-    tags: ['Orthopedics', 'Rehabilitation'],
-  },
-  {
-    id: 6,
-    title: 'Cedar Valley Hospital',
-    description: 'Type: General Hospital',
-    location: '987 Cedar St., Cedar Valley',
-    image: 'https://media.gettyimages.com/id/1312706413/photo/modern-hospital-building.jpg?s=612x612&w=gi&k=20&c=1-EC4Mxf--5u4ItDIzrIOrduXlbKRnbx9xWWtiifrDo=',
-    tags: ['General', 'Emergency', 'Pediatrics'],
-  },
-];
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import HospitalModel, { Hospital } from '@/model/Hospital'; // Importing the interface
+import populateHospitals from '@/scripts/populateHospitals';
+import {useRouter} from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const Dashboard = () => {
+  
+  const [selectedCity, setSelectedCity] = useState<string>('All Cities');
+  const [hospitals, setHospitals] = useState<Hospital[]>([]); // Correct type for hospitals
+  const [loading, setLoading] = useState<boolean>(true);
+  const [cities, setCities] = useState<string[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const response = await fetch('/api/get-locations');
+      const data = await response.json();
+      setCities(['All Cities', ...data]); 
+    };
+
+    fetchLocations();
+  }, []);
+
+  const handleViewDoctors = (hospitalId: string) => {
+    router.push(`/hospital/${hospitalId}`); // Navigates to the hospital's doctors page
+  };
+
+  
+  
+
+  
+  const handleCityChange =  async (city: string) => {
+    setSelectedCity(city);
+
+    // Fetch hospitals based on selected city
+    if (city !== 'All Cities') {
+      setLoading(true); 
+      const response = await fetch(`/api/get-hospitals?location=${city}`);
+      const data: Hospital[] = await response.json(); 
+      console.log(data)
+      setHospitals(data);
+      setLoading(false); 
+    } else {
+      setHospitals([]); 
+    }
+  };
   return (
-    <div className="container mx-auto p-6 bg-black text-white w-full h-auto min-w-fit min-h-screen"> {/* Set background to black and text to white */}
-      <h1 className="text-3xl font-bold mb-6 border-b-4 inline-block pb-2 rounded-sm border-teal-500">Look for Hospitals</h1>
-      <div className="relative max-w-full  "> {/* Wrapper div to control the absolute positioning */}
-        <Carousel className="overflow-hidden p-2"> {/* Restrict the carousel width to the screen */}
+    <div className="container mx-auto p-6 bg-slate-200 dark:bg-black text-black dark:text-white w-full h-auto min-w-fit min-h-screen">
+      <h2 className="p-5 md:text-4xl lg:text-5xl font-bold text-center text-black dark:text-white tracking-tight text-shadow-custom">
+        Welcome to Doctors Point
+      </h2>
+
+      <div className="flex items-center justify-between">
+        <h3 className="text-2xl font-bold mb-6 border-b-4 inline-block pb-2 rounded-sm border-sky-500 pt-5">
+          Look for Hospitals
+        </h3>
+
+        <Select value={selectedCity} onValueChange={handleCityChange}  >
+      <SelectTrigger className="w-[280px] bg-slate-200 dark:bg-gray-800  text-black dark:text-white p-2 rounded-md border-2 border-solid border-black dark:border-white ">
+        <SelectValue placeholder="Select Your Location" className='text-black dark:text-white' />
+      </SelectTrigger>
+      <SelectContent className='bg-white dark:bg-black'>
+        <SelectGroup className='bg-transparent' >
+          <SelectLabel className='text-lg text-black dark:text-white'>Cities</SelectLabel>
+          {cities.map((city) => (
+            <SelectItem key={city} value={city} className='bg-transparent text-black dark:text-white'>
+              {city}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+      </div>
+
+      <div className="relative max-w-full p-3">
+        <Carousel className="overflow-hidden p-2">
           <CarouselContent>
-            {hospitals.map((hospital) => (
-              <CarouselItem key={hospital.id} className="lg:basis-1/4">
-                <div className="p-1">
-                  <Card className="shadow-lg w-65 bg-gray-800 transition-all ease-in-out delay-150 hover:scale-105"> {/* Card background color set to dark gray */}
-                    <CardHeader>
-                      <img 
-                        src={hospital.image} 
-                        alt={`${hospital.title} Image`} 
-                        className="rounded-t-lg w-full h-24 object-cover" 
-                      />
-                    </CardHeader>
-                    <CardContent className="p-2">
-                      <h2 className="text-lg font-bold text-teal-400 mb-1">{hospital.title}</h2> {/* Adjusted text color for title */}
-                      <p className="text-gray-300 text-xs">{hospital.description}</p> {/* Adjusted text color for description */}
-                      <p className="text-gray-300 text-xs">Location: {hospital.location}</p> {/* Adjusted text color for location */}
-                      <div className="mt-1">
-                        {hospital.tags.map((tag, index) => (
-                          <span key={index} className="inline-block bg-teal-500 text-white text-xs font-semibold mr-1 px-1 py-0.5 rounded">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button className="bg-teal-500 text-white hover:bg-teal-600 text-xs">
-                        View Doctors
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
+            {loading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <CarouselItem key={index} className="lg:basis-1/4">
+                    <SkeletonCard />
+                  </CarouselItem>
+                ))
+              : hospitals.map((hospital: Hospital) => ( 
+                  <CarouselItem  className="lg:basis-1/4"> 
+                    <div className="p-1">
+                      <Card className="shadow-lg w-65 bg-slate-50  dark:bg-gray-800 transition-all ease-in-out delay-150 hover:scale-105">
+                        <CardHeader>
+                          <img
+                            src={hospital.photoLink}
+                            alt={`${hospital.name} Image`}
+                            className="rounded-t-lg w-full h-36 object-cover border-2 border-solid border-sky-500"
+                          />
+                        </CardHeader>
+                        <CardContent >
+                          <h2 className="text-lg font-bold text-blue-400 mb-1 text-center">
+                            {hospital.name}
+                          </h2>
+                          {/* <p className="text-black text-xs">
+                            {hospital.location}
+                          </p> */}
+                          
+                        </CardContent>
+                        <CardFooter>
+                          <Button onClick={() => handleViewDoctors(hospital.name)} className="bg-blue-500 text-white hover:bg-transparent hover:border-2 hover:border-solid hover:border-sky-500 text-xs hover:text-black">
+                            View Doctors
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
           </CarouselContent>
 
-          {/* Carousel Navigation */}
-          <CarouselPrevious 
-            className="absolute top-1/2 left-0 transform -translate-y-1/2 z-10 bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-full animate-bounce-sideways"
-          /> {/* Previous button */}
-          <CarouselNext 
-            className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10 bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-full animate-bounce-sideways"
-          /> {/* Next button */}
+          <CarouselPrevious className="absolute top-1/2 left-0 transform -translate-y-1/2 z-10 bg-sky-500 hover:bg-transparent text-black p-2 rounded-full animate-bounce-sideways" />
+          <CarouselNext className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10 bg-sky-500 hover:bg-transparent text-black p-2 rounded-full animate-bounce-sideways" />
         </Carousel>
       </div>
     </div>

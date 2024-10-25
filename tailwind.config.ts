@@ -12,7 +12,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      textShadow: {
+        'custom': '2px 2px 4px rgba(59, 130, 246, 1)', // Custom shadow
+      },
       keyframes:{
+
         'bounce-sideways': {
           '0%, 100%': {
             transform: 'translateX(-25%)',
@@ -22,6 +26,11 @@ const config: Config = {
             transform: 'translateX(0)',
             'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
           },
+        },
+
+        pulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.4' },
         },
       },
       colors: {
@@ -74,6 +83,7 @@ const config: Config = {
     },
     animation:{
       'bounce-sideways': 'bounce-sideways 1s infinite',
+      pulse: 'pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
     }
   },
   plugins: [

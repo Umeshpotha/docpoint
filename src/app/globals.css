@@ -72,3 +72,6 @@
   font-family: 'Kaushan Script', cursive;
 }
 
+.text-shadow-custom {
+  text-shadow: 5px 5px 20px rgba(20, 184, 166, 1); /* Teal color shadow */
+}
