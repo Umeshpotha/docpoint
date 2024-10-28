@@ -9,7 +9,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Make the Navbar sticky */}
-      <Navbar />
+      <Navbar  />
       <main className="flex-grow">{children}</main>
       <Footer/>
     </div>

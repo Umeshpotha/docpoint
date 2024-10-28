@@ -15,11 +15,11 @@ function Navbar() {
   const [showProfile, setShowProfile] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 p-4 md:p-6 shadow-lg bg-slate-200 dark:bg-gray-900 text-black dark:text-white">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+    <nav className="sticky top-0 z-50 p-4 md:p-6 shadow-lg bg-white dark:bg-gray-900 text-black dark:text-white">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center bg-transparent">
         <Link
           href="/"
-          className="text-2xl font-bold mb-4 md:mb-0 text-teal-600 dark:text-teal-400 hover:text-teal-500 dark:hover:text-teal-300 font-kaushan"
+          className="text-2xl font-bold mb-4 md:mb-0 text-sky-600 dark:text-teal-400 hover:text-teal-500 dark:hover:text-teal-300 font-kaushan"
         >
           Doctors Point
         </Link>
@@ -27,7 +27,7 @@ function Navbar() {
           {session ? (
             <>
               <span className="mr-4 text-gray-700 dark:text-gray-300">
-                Welcome, {user?.username || user?.email}
+                Welcome {user?.username || user?.email}
               </span>
               <button
                 className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
@@ -49,7 +49,7 @@ function Navbar() {
 
               <Button
                 onClick={() => signOut()}
-                className="bg-transparent dark:bg-teal-400 text-black dark:text-black hover:bg-teal-500 dark:hover:bg-teal-300 shadow-lg"
+                className="bg-sky-500 dark:bg-teal-400 text-black dark:text-black hover:bg-transparent dark:hover:bg-teal-300 shadow-lg hover:border-2 hover:border-solid hover:border-sky-500"
                 aria-label="Logout"
               >
                 Logout
