@@ -50,13 +50,13 @@ const verifyAccount = () => {
   }
 
   return (
-    <div className="relative flex justify-center items-center min-h-screen bg-gray-700">
-  <div className="relative w-full max-w-md p-8 bg-gray-900 text-white rounded-lg shadow-xl z-10">
+    <div className="relative flex justify-center items-center min-h-screen dark:bg-gray-700 bg-slate-50">
+  <div className="relative w-full max-w-md p-8 bg-white text-black dark:bg-gray-900 dark:text-white rounded-lg shadow-xl z-10">
     <div className="text-center">
-      <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-teal-400">
+      <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-sky-500 dark:text-teal-400">
         Verify Your Account
       </h1>
-      <p className="text-gray-300 mb-4">
+      <p className="dark:text-gray-300 text-gray-900 mb-4">
         Enter the Verification Code Sent to Your Email
       </p>
     </div>
@@ -73,27 +73,27 @@ const verifyAccount = () => {
                   <InputOTPGroup className="flex justify-center gap-2 w-full">
                     <InputOTPSlot
                       index={0}
-                      className="bg-gray-700 border border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                      className="dark:bg-gray-700 bg-white border border-sky-500 dark:border dark:border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium dark:text-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 dark:focus:ring-teal-400"
                     />
                     <InputOTPSlot
                       index={1}
-                      className="bg-gray-700 border border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                      className="dark:bg-gray-700 bg-white border border-sky-500 dark:border dark:border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium dark:text-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 dark:focus:ring-teal-400"
                     />
                     <InputOTPSlot
                       index={2}
-                      className="bg-gray-700 border border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                      className="dark:bg-gray-700 bg-white border border-sky-500 dark:border dark:border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium dark:text-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 dark:focus:ring-teal-400"
                     />
                     <InputOTPSlot
                       index={3}
-                      className="bg-gray-700 border border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                      className="dark:bg-gray-700 bg-white border border-sky-500 dark:border dark:border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium dark:text-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 dark:focus:ring-teal-400"
                     />
                     <InputOTPSlot
                       index={4}
-                      className="bg-gray-700 border border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                      className="dark:bg-gray-700 bg-white border border-sky-500 dark:border dark:border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium dark:text-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 dark:focus:ring-teal-400"
                     />
                     <InputOTPSlot
                       index={5}
-                      className="bg-gray-700 border border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                      className="dark:bg-gray-700 bg-white border border-sky-500 dark:border dark:border-gray-600 rounded-lg p-2 text-center w-12 h-12 text-lg font-medium dark:text-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 dark:focus:ring-teal-400"
                     />
                   </InputOTPGroup>
                 </InputOTP>
@@ -104,7 +104,7 @@ const verifyAccount = () => {
         />
         <Button
           type="submit"
-          className=" bg-teal-400 hover:bg-teal-300 text-white py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400"
+          className=" dark:bg-teal-400 bg-sky-500 hover:bg-transparent dark:hover:bg-teal-300 dark:text-white py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 dark:focus:ring-teal-400 hover:border-2 hover:border-solid hover:border-sky-500 hover:text-black"
         >
           Submit
         </Button>

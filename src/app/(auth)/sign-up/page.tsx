@@ -105,12 +105,12 @@ const page = () => {
   };
 
   return (
-    <div className="relative flex justify-center items-center min-h-screen bg-gray-700">
+    <div className="relative flex justify-center items-center min-h-screen bg-slate-50 dark:bg-gray-700">
       {/* <BackgroundGradient className="rounded-[22px] max-w-md p-8  bg-gray-900 text-white shadow-xl z-10"> */}
-      <div className="relative w-full max-w-md p-8  bg-gray-900 text-white rounded-lg shadow-xl z-10">
+      <div className="relative w-full max-w-md p-8  dark:bg-gray-900 dark:text-white rounded-lg shadow-xl z-10 bg-white text-black">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-teal-400">Create Your Account</h1>
-          <p className="text-gray-300 mb-4">Sign up to get started</p>
+          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-sky-500 dark:text-teal-400">Create Your Account</h1>
+          <p className="dark:text-gray-300 text-black mb-4">Sign up to get started</p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -128,7 +128,7 @@ const page = () => {
                         field.onChange(e);
                         debounced(e.target.value);
                       }}
-                      className="bg-gray-700 text-white placeholder-gray-400 shadow-md"
+                      className="dark:bg-gray-700 bg-white dark:text-white text-black  shadow-md"
                     />
                   </FormControl>
                   {isCheckingUsername && <Loader2 className="animate-spin" />}
@@ -149,7 +149,7 @@ const page = () => {
                     <Input
                       placeholder="Email"
                       {...field}
-                      className="bg-gray-700 text-white placeholder-gray-400 shadow-md"
+                      className="dark:bg-gray-700 bg-white dark:text-white text-black shadow-md"
                     />
                   </FormControl>
                   <FormMessage />
@@ -171,7 +171,7 @@ const page = () => {
                         field.onChange(e);
                         debouncedPassword(e.target.value);
                       }}
-                      className="bg-gray-700 text-white placeholder-gray-400 shadow-md"
+                      className="dark:bg-gray-700 bg-white dark:text-white text-black shadow-md"
                     />
                   </FormControl>
                   <p className={`text-sm ${passwordStrength === 'Weak' ? 'text-red-500' : passwordStrength === 'Moderate' ? 'text-yellow-500' : 'text-green-500'}`}>
@@ -184,7 +184,7 @@ const page = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmitting||!meetsRequirements} className="w-full bg-teal-400 hover:bg-teal-300 shadow-lg">
+            <Button type="submit" disabled={isSubmitting||!meetsRequirements} className="w-full bg-sky-400 hover:bg-teal-300 shadow-lg dark:bg-teal-300">
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
@@ -195,7 +195,7 @@ const page = () => {
         </Form>
         <div className="text-center mt-4">
           <p>Have an account?{' '}
-            <Link href="/sign-in" className="text-teal-400 hover:text-teal-200">Sign in</Link>
+            <Link href="/sign-in" className="dark:text-teal-400 dark:hover:text-teal-200 text-sky-500 hover:text-sky-200">Sign in</Link>
           </p>
         </div>
       </div>

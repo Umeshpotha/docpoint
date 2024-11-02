@@ -9,8 +9,13 @@ export async function GET(request: Request) {
 
   try {
     console.log('Selected city:', selectedCity);
-    const hospitals = await HospitalModel.find({ location: selectedCity }); 
-    console.log(hospitals)
+    
+    // Check if a specific city is selected; if not, return all hospitals
+    const hospitals = selectedCity && selectedCity !== 'All Cities'
+      ? await HospitalModel.find({ location: selectedCity })
+      : await HospitalModel.find(); // Fetch all hospitals if "All Cities" is selected or empty
+
+    console.log(hospitals);
     return NextResponse.json(hospitals);
   } catch (error) {
     console.error(error);

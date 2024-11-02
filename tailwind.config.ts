@@ -84,6 +84,8 @@ const config: Config = {
     animation:{
       'bounce-sideways': 'bounce-sideways 1s infinite',
       pulse: 'pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      'spin': 'spin 1.5s linear infinite',
+      
     }
   },
   plugins: [

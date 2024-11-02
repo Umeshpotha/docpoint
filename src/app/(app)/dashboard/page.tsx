@@ -6,26 +6,38 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import HospitalModel, { Hospital } from '@/model/Hospital';
 import populateHospitals from '@/scripts/populateHospitals';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  
   const [selectedCity, setSelectedCity] = useState<string>('All Cities');
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [cities, setCities] = useState<string[]>([]);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchLocations = async () => {
       const response = await fetch('/api/get-locations');
       const data = await response.json();
       setCities(['All Cities', ...data]);
+
+      // Get city from URL params, if available
+      const city = searchParams.get('city') || 'All Cities';
+      setSelectedCity(city);
+
+      if (city !== 'All Cities') {
+        setLoading(true);
+        const response = await fetch(`/api/get-hospitals?location=${city}`);
+        const data: Hospital[] = await response.json();
+        setHospitals(data);
+        setLoading(false);
+      }
     };
 
     fetchLocations();
-  }, []);
+  }, [searchParams]);
 
   const handleViewDoctors = (hospitalId: string) => {
     router.push(`/hospital/${hospitalId}`);
@@ -33,12 +45,14 @@ const Dashboard = () => {
 
   const handleCityChange = async (city: string) => {
     setSelectedCity(city);
+    router.push(`/dashboard/?city=${city}`);
+
     if (city !== 'All Cities') {
-      setLoading(true); 
+      setLoading(true);
       const response = await fetch(`/api/get-hospitals?location=${city}`);
       const data: Hospital[] = await response.json();
       setHospitals(data);
-      setLoading(false); 
+      setLoading(false);
     } else {
       setHospitals([]);
     }
@@ -50,7 +64,7 @@ const Dashboard = () => {
       style={{ backgroundImage: 'url("/images/background.webp")' }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-35"  ></div>
+      <div className="absolute inset-0 bg-black opacity-35"></div>
 
       <div className="relative z-10 text-white">
         <h2 className="p-5 md:text-4xl lg:text-5xl font-bold text-center tracking-tight">

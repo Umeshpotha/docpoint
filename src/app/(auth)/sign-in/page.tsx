@@ -61,11 +61,11 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="relative flex justify-center items-center min-h-screen bg-gray-700">
-      <div className="relative w-full max-w-md p-8 bg-gray-900 text-white rounded-lg shadow-xl z-10">
+    <div className="relative flex justify-center items-center min-h-screen bg-slate-50">
+      <div className="relative w-full max-w-md p-8 bg-white text-black rounded-lg shadow-xl z-10">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-teal-400">Sign In</h1>
-          <p className="text-gray-300 mb-4">Enter your credentials to sign in</p>
+          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-sky-400">Sign In</h1>
+          <p className="text-black mb-4">Enter your credentials to sign in</p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -79,7 +79,7 @@ const SignInPage = () => {
                     <Input
                       placeholder="Email or Username"
                       {...field}
-                      className="bg-gray-700 text-white placeholder-gray-400 shadow-md"
+                      className="bg-white text-black  shadow-md"
                     />
                   </FormControl>
                   <FormMessage />
@@ -97,14 +97,14 @@ const SignInPage = () => {
                       type="password"
                       placeholder="Password"
                       {...field}
-                      className="bg-gray-700 text-white placeholder-gray-400 shadow-md"
+                      className="bg-white text-black shadow-md"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmitting} className="w-full bg-teal-400 hover:bg-teal-300 shadow-lg">
+            <Button type="submit" disabled={isSubmitting} className="w-full bg-sky-400 hover:bg-transparent  text-white shadow-lg hover:border-2 hover:border-sky-500 hover:text-black">
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
@@ -115,7 +115,7 @@ const SignInPage = () => {
         </Form>
         <div className="text-center mt-4">
           <p>Don't have an account?{' '}
-            <Link href="/sign-up" className="text-teal-400 hover:text-teal-200">Sign up</Link>
+            <Link href="/sign-up" className="text-sky-400 hover:text-sky-600">Sign up</Link>
           </p>
         </div>
       </div>

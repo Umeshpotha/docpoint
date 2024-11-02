@@ -58,7 +58,7 @@ function Navbar() {
           ) : (
             <Link href="/sign-in">
               <Button
-                className="bg-transparent dark:bg-teal-400 text-black dark:text-black hover:bg-teal-500 dark:hover:bg-teal-300 shadow-lg"
+                className="bg-sky-500 text-white dark:bg-teal-400  dark:text-black hover:bg-teal-500 dark:hover:bg-teal-300 shadow-lg hover:bg-transparent hover:border-2 hover:border-sky-500 hover:text-black"
                 aria-label="Login"
               >
                 Login

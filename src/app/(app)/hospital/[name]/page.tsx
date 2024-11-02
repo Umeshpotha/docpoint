@@ -1,19 +1,20 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Doctor } from '@/model/doctor';
 
 const DoctorsPage = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const { name } = useParams();
+  const params = useParams();
+  let hospitalName = Array.isArray(params.name) ? params.name[0] : params.name;  const router = useRouter();
 
   useEffect(() => {
     const fetchDoctors = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`/api/get-doctors?hospitalName=${name}`);
+        const response = await fetch(`/api/get-doctors?hospitalName=${hospitalName}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -26,10 +27,16 @@ const DoctorsPage = () => {
       }
     };
 
-    if (name) {
+    if (hospitalName) {
       fetchDoctors();
     }
-  }, [name]);
+  }, [hospitalName]);
+
+  const handleScheduleAppointment = (doctorId: string, doctorName: string) => {
+    doctorName=encodeURIComponent(doctorName);
+    hospitalName=encodeURIComponent(hospitalName);
+    router.push(`/schedule/${doctorId}?doctorName=${doctorName}&hospitalName=${hospitalName}`);
+  };
 
   const filteredDoctors = doctors.filter((doctor) =>
     doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -61,7 +68,10 @@ const DoctorsPage = () => {
             <div key={doctor._id} className="border p-4 rounded-lg shadow-lg transition hover:shadow-xl bg-white">
               <h2 className="text-xl font-semibold text-center">{doctor.name}</h2>
               <p className="text-center text-gray-600">Specialization: {doctor.specialization}</p>
-              <button className="w-full mt-4 py-2 px-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600">
+              <button
+                onClick={() => handleScheduleAppointment(doctor._id, doctor.name)}
+                className="w-full mt-4 py-2 px-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600"
+              >
                 Schedule Appointment
               </button>
             </div>
