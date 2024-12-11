@@ -3,7 +3,7 @@ import { google } from "googleapis";
 import VerificationEmail from "../../emails/VerificationEmail";
 import { apiResponse } from "@/types/apiResponse";
 
-// OAuth2 setup
+
 const OAuth2 = google.auth.OAuth2;
 
 const oauth2Client = new OAuth2(
@@ -13,7 +13,7 @@ const oauth2Client = new OAuth2(
 );
 
 oauth2Client.setCredentials({
-  refresh_token: process.env.REFRESH_TOKEN, // Refresh Token from Google OAuth Playground
+  refresh_token: process.env.REFRESH_TOKEN,
 });
 
 export async function sendVerificationEmail(
@@ -25,10 +25,9 @@ export async function sendVerificationEmail(
     console.log("sending email....");
     console.log(email);
 
-    // Get the access token
     const accessToken = await oauth2Client.getAccessToken();
 
-    // Create a transporter object using OAuth2
+  
     const transporter = nodemailer.createTransport({
       service: "gmail", // You can change this if using another provider
       auth: {

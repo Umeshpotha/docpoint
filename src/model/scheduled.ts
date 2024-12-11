@@ -21,7 +21,7 @@ const AppointmentSchema = new Schema<IScheduled>({
   BloodGroup: { type: String, required: true },
   doctorId: { type: String, required: true },
   doctorName: { type: String, required: true },
-    hospitalName: { type: String, required: true },
+  hospitalName: { type: String, required: true },
   userId: { type: String, required: true }
 }, { timestamps: true });
 

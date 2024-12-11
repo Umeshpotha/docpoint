@@ -40,7 +40,7 @@ interface DoctorDetails {
 const DoctorAppointmentForm = () => {
   const { data: session } = useSession();
   const user: User = session?.user as User;
-  const userId = user?.id;
+  const userId = "users";
   console.log(userId);
   const router = useRouter();
   const searchParams = useSearchParams();
