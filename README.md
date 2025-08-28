@@ -49,7 +49,7 @@ Built with **Next.js 13 App Router**, **NextAuth**, and **Tailwind CSS**, it pro
 
 ---
 ## 📂 Project Structure (simplified)
-
+```
 src/
 ├─ app/
 │ ├─ (app)/ # Core pages (about, contact, dashboard, hospital, schedule, success)
@@ -58,7 +58,7 @@ src/
 │ ├─ globals.css # Global styles
 │ └─ layout.tsx # Root layout
 ├─ middleware.ts # Middleware for auth/session handling
-
+```
 ---
 
 ## ⚙️ Getting Started
