@@ -70,3 +70,27 @@ cd docpoint
 npm install
 ```
 
+### 2. Install dependencies
+
+```
+npm install
+```
+### 3. Configure environment variables
+**Create a .env.local file in the root with values like:** 
+```
+NEXTAUTH_SECRET=your_secret_key
+NEXTAUTH_URL=http://localhost:3000
+DATABASE_URL=your_database_url_here
+EMAIL_SERVER=smtp://...
+EMAIL_FROM=your@email.com
+```
+
+### 4. Run the development server
+```
+npm run dev
+```
+### 5. Build for production
+```
+npm run build
+npm start
+```
