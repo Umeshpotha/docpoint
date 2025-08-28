@@ -44,7 +44,7 @@ Built with **Next.js 13 App Router**, **NextAuth**, and **Tailwind CSS**, it pro
 - **Frontend & Framework**: [Next.js 13+ (App Router)](https://nextjs.org/)  
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)  
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/)  
-- **Database**: (likely MongoDB / Prisma – configure via `DATABASE_URL`)  
+- **Database**: (MongoDB  – configure via `DATABASE_URL`)  
 - **Deployment**: [Vercel](https://vercel.com/)  
 
 ---
